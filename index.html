@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="A lightweight browser-style Progressive Web App">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <title>Nova Browser</title>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand"><img class="brand-icon" src="icon.svg" alt=""><span>Nova</span></div>
+      <button class="icon-btn" id="tabsButton" aria-label="Open tabs">▢ <span id="tabCount">1</span></button>
+      <button class="icon-btn plus" id="newTabButton" aria-label="New tab">＋</button>
+      <button class="icon-btn" id="menuButton" aria-label="Menu">⋮</button>
+    </header>
+
+    <section class="toolbar">
+      <button class="nav-btn" id="backButton" aria-label="Back">‹</button>
+      <button class="nav-btn" id="forwardButton" aria-label="Forward">›</button>
+      <button class="nav-btn" id="reloadButton" aria-label="Reload">↻</button>
+      <form id="addressForm" class="address-form">
+        <span class="search-symbol">⌕</span>
+        <input id="addressInput" type="text" autocomplete="off" spellcheck="false"
+          placeholder="Search Google or enter address">
+        <button type="submit" aria-label="Go">➜</button>
+      </form>
+    </section>
+
+    <nav class="quick-actions" aria-label="Browser actions">
+      <button data-action="home">⌂ <span>Home</span></button>
+      <button data-action="bookmarks">☆ <span>Bookmarks</span></button>
+      <button data-action="history">◷ <span>History</span></button>
+    </nav>
+
+    <section class="content" id="content">
+      <div class="home-screen" id="homeScreen">
+        <div class="hero-mark"><img src="icon.svg" alt="Nova browser logo"></div>
+        <h1>What would you like to find?</h1>
+        <p class="subheading">Search the web or enter a website address</p>
+        <form id="homeSearchForm" class="home-search">
+          <span>⌕</span>
+          <input id="homeSearchInput" type="text" placeholder="Search Google..." autocomplete="off">
+          <button type="submit">Search</button>
+        </form>
+        <div class="shortcut-grid">
+          <button class="shortcut" data-url="https://www.google.com"><span class="shortcut-icon google">G</span><span>Google</span></button>
+          <button class="shortcut" data-url="https://www.wikipedia.org"><span class="shortcut-icon wiki">W</span><span>Wikipedia</span></button>
+          <button class="shortcut" data-url="https://www.youtube.com"><span class="shortcut-icon youtube">▶</span><span>YouTube</span></button>
+          <button class="shortcut" data-url="https://github.com"><span class="shortcut-icon github">⌘</span><span>GitHub</span></button>
+        </div>
+        <div class="notice">
+          <strong>Browser preview</strong>
+          <p>This PWA provides browser-style tabs and search. Websites that block embedding will open in your external browser.</p>
+        </div>
+      </div>
+      <div id="webFallback" class="web-fallback hidden">
+        <div class="fallback-icon">↗</div>
+        <h2>Open this website</h2>
+        <p id="fallbackUrl"></p>
+        <p class="muted">For security, many websites do not allow themselves to be displayed inside another app.</p>
+        <a id="openExternal" class="primary-link" href="#" target="_blank" rel="noopener">Open in browser</a>
+        <button id="copyUrl" class="secondary-button">Copy address</button>
+        <button id="returnHome" class="text-button">Return to home</button>
+      </div>
+      <div id="historyScreen" class="list-screen hidden">
+        <h2>Recent history</h2><div id="historyList"></div>
+      </div>
+      <div id="bookmarksScreen" class="list-screen hidden">
+        <h2>Bookmarks</h2><p class="muted">Save the current address from the menu when a website is selected.</p><div id="bookmarkList"></div>
+      </div>
+    </section>
+    <footer class="statusbar">
+      <span id="currentTabLabel">New tab</span>
+      <span id="zoomLabel">100%</span>
+    </footer>
+  </main>
+
+  <div class="overlay hidden" id="tabsOverlay">
+    <section class="sheet">
+      <div class="sheet-head"><h2>Tabs <span id="sheetTabCount"></span></h2><button class="close-btn" id="closeTabs">✕</button></div>
+      <div id="tabsList" class="tabs-list"></div>
+      <button class="wide-primary" id="sheetNewTab">＋ New tab</button>
+    </section>
+  </div>
+
+  <div class="overlay hidden" id="menuOverlay">
+    <section class="menu-sheet">
+      <button data-menu="bookmark">☆ Save bookmark</button>
+      <button data-menu="history">◷ View history</button>
+      <button data-menu="bookmarks">★ View bookmarks</button>
+      <button data-menu="install" id="installButton">⇩ Install app</button>
+      <button data-menu="about">ⓘ About Nova</button>
+    </section>
+  </div>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
