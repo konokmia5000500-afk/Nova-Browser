@@ -105,6 +105,44 @@
     render();
     // Browsers do not permit a PWA to embed every website. This button opens the URL externally.
   }
+
+  function submitAddress(value) {
+  const url = normalizeInput(value);
+
+  if (!url) return;
+
+  const tab = activeTab();
+
+  tab.url = url;
+  tab.title = safeTitle(url);
+  tab.view = "website";
+
+  const item = {
+    url: url,
+    title: tab.title,
+    time: Date.now()
+  };
+
+  state.history = state.history.filter(
+    entry => entry.url !== url
+  );
+
+  state.history.push(item);
+
+  if (state.history.length > 300) {
+    state.history.shift();
+  }
+
+  tab.history = tab.history || [];
+  tab.history.push(url);
+
+  save();
+
+  // সার্চ বা URL সরাসরি বর্তমান Chrome ট্যাবে খোলে
+  window.location.assign(url);
+}
+
+  
   function newTab() {
     const tab = { id: Date.now() + Math.floor(Math.random()*1000), title: "New tab", url: "", view: "home", zoom: 100, history: [] };
     state.tabs.push(tab); state.activeId = tab.id; $("tabsOverlay").classList.add("hidden"); render();
